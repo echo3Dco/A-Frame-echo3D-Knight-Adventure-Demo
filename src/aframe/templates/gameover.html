@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Game Over</title>
+
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+
+  <script>
+    const API_KEY = {{ API_KEY | tojson }};
+    const BACKGROUND = {{ BACKGROUND | tojson }};
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.body.style.backgroundImage = "url('https://api.echo3D.co/query?key={{ API_KEY }}&file={{ BACKGROUND }}')";
+    });
+  </script>
+</head>
+
+<body>
+  <h1><span class="highlight">You Have Killed the Dragon!</span></h1>
+
+  <p>
+    <span class="texthighlight">
+      You have saved the city from the evil dragon! Congratulations!
+    </span>
+  </p>
+
+  <p>
+    <span class="texthighlight">
+      Civilians in the city will always remember you.
+    </span>
+  </p>
+
+  <a href="/">Click here to play again.</a>
+</body>
+
+</html>

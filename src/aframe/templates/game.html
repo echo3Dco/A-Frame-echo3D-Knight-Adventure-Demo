@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Underworld</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script>
+        const game_health = {{ game_health | tojson }};
+        let now_health = 5;
+
+        const API_KEY = {{ API_KEY | tojson }};
+        const WARRIOR = {{ WARRIOR | tojson }};
+        const NIGHTSKY = {{ NIGHTSKY | tojson }};
+        const ROCK = {{ ROCK | tojson }};
+        const SMALL_DRAGON = {{ SMALL_DRAGON | tojson }};
+        const SWORD = {{ SWORD | tojson }};
+        const KNIGHT = {{ KNIGHT | tojson }};
+
+        const random_position_list = {{ random_position_list | tojson }};
+    </script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename = 'script.js') }}"></script>
+</head>
+
+<body>
+    <a-scene id="my_scene" physics="debug: false; friction:10" renderer="antialias:true" cursor="rayOrigin: mouse"
+        camera-position>
+        <a-assets timeout="1000000">
+            <img id="echo-nightsky" crossorigin="anonymous"
+                src="https://api.echo3D.co/query?key={{ API_KEY }}&file={{ NIGHTSKY }}" />
+
+            <img id="echo-rock" crossorigin="anonymous"
+                src="https://api.echo3D.co/query?key={{ API_KEY }}&file={{ ROCK }}" />
+
+            <a-asset-item id="echo-warrior" crossorigin="anonymous"
+                src="https://api.echo3D.co/query?key={{ API_KEY }}&file={{ WARRIOR }}">
+            </a-asset-item>
+
+            <a-asset-item id="echo-small-dragon" crossorigin="anonymous"
+                src="https://api.echo3D.co/query?key={{ API_KEY }}&file={{ SMALL_DRAGON }}">
+            </a-asset-item>
+
+            <a-asset-item id="echo-sword" crossorigin="anonymous"
+                src="https://api.echo3D.co/query?key={{ API_KEY }}&file={{ SWORD }}">
+            </a-asset-item>
+
+            <a-asset-item id="echo-knight" crossorigin="anonymous"
+                src="https://api.echo3D.co/query?key={{ API_KEY }}&file={{ KNIGHT }}">
+            </a-asset-item>
+        </a-assets>
+
+        <a-entity id="avbox" position="0 2 1" bound="x1:-14; z1: 5; x2: 14; z2: -75"
+            wasd-controls="acceleration:250; fly:false" rotation-look-control="pointerLockEnabled:true"
+            rotation="0 90 0">
+            <a-entity camera position="0 1 2" rotation="-30 0 0">
+                <a-entity id="scoreboard" text="width:6; value:; color:yellow" position="2.5 1.5 -2" rotation="-5 0 0">
+                </a-entity>
+                <a-entity id="hud" text="width:3; value: ;" position="-1.5 1 -2" rotation="-5 0 0">
+                </a-entity>
+                <a-entity gltf-model="#echo-sword" position="0.6 0 -3.5" scale="0.05 0.05 0.05">
+                </a-entity>
+                <a-entity text="width:2; value: Use the Sword to Kill the Dragon!; font:mozillavr;"
+                    position="2.1 1 -2"></a-entity>
+                <a-entity text="width:2; value: Don't Collide with the Monsters! They will stab you back!; font:mozillavr;"
+                    position="2.1 0.8 -2"></a-entity>
+            </a-entity>
+            <a-entity id="avatar" movement-animation="target: #avatar" gltf-model="#echo-knight"
+                animation-mixer="clip:Idle" scorekeeper scale="0.7 0.7 0.7" position="0 -1.7 0" rotation="0 180 0">
+                <a-entity geometry="primitive: box"
+                    collision-handler="target: #my_scene; scoreboard: #scoreboard; avatar: #avatar" scale="0.4 1.6 0.2"
+                    rotation="90 0 0" position="0 0 -0.9" static-body="shape: auto; mass: 2" material="opacity: 0;">
+                </a-entity>
+            </a-entity>
+        </a-entity>
+
+        <a-plane position="0 0 -35" rotation="-90 0 0" width="30" height="80" static-body="shape: auto;"
+            material="src:#echo-rock; repeat: 10 10"></a-plane>
+
+        <a-entity id="reward" gltf-model="#echo-small-dragon" position="0 1 -72" dynamic-body="shape: auto;"
+            rotation="0 0 0" scale="0.3 0.3 0.3">
+        </a-entity>
+
+        {% for each_position in random_position_list %}
+        <a-entity id="warrior-{{each_position}}" gltf-model="#echo-warrior" position="{{each_position}}"
+            dynamic-body="shape: auto; mass: 100;" scale="0.1 0.1 0.1">
+        </a-entity>
+        {% endfor %}
+
+        <a-sky src="#echo-nightsky"></a-sky>
+    </a-scene>
+</body>
+
+</html>

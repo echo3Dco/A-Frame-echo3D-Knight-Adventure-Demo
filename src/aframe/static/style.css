@@ -1,0 +1,65 @@
+body {
+  margin: 1in;
+  font: 20pt Roboto Mono;
+  font-weight: 400;
+  background-size: cover;
+  background-color: hsl(300, 84%, 75%);
+  background-blend-mode: multiply;
+}
+
+h1 {
+  margin-bottom: 0.1in;
+  font: 50pt;
+  color: #f8f5f4;
+  font-weight: bold;
+  font-style: italic;
+  font-family: Papyrus;
+}
+
+.highlight {
+  /* background-color: #fa8072; */
+  color: #FCF3CF;
+}
+
+p {
+  font-family: Rockwell;
+}
+
+.texthighlight {
+  /* background-color: black; */
+  color: beige;
+}
+
+a {
+  font-family: Lucida Console;
+}
+
+a:hover {
+  color: #fa8072;
+  /* background-color: #621514; */
+}
+
+a:visited:hover {
+  color: #fa8072;
+  /* background-color: #621514; */
+}
+
+a:link {
+  color: #FCF3CF;
+  /* background-color: #fff8e7; */
+}
+
+a:visited {
+  color: #FCF3CF;
+  /* background-color: #fff8e7; */
+}
+
+a:active {
+  color: #621514;
+}
+
+.name {
+  font-family: Book Antiqua;
+  font-weight: bold;
+  font-style: italic;
+}
